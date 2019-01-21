@@ -1,11 +1,11 @@
 # TODO
 
-- [ ] Implement topology: h1 <-> s1 <-> h2
-- [ ] Experiment script:
+- [X] Implement topology: h1 <-> s1 <-> h2
+- [X] Experiment script:
   - [x] First draft
-  - [ ] Capture controller log
-  - [ ] Capture mininet log
-  - [ ] Implement scapy script to generate several packets with different sources
+  - [X] Capture controller log
+  - [X] Capture mininet log
+  - [X] Implement scapy script to generate several packets with different sources
 - [ ] Test with different controllers, such as:
   - [ ] ONOS
   - [ ] OpenDaylight
