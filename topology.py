@@ -55,7 +55,7 @@ def main():
     mn.start()
     h2.cmd('ping -c 1 10.0.0.1')
     # h1.cmd('python send_packet.py 1000000 h1-eth0 00:00:00:00:00:02')
-    h1.cmd('tcpreplay -i h1-eth0 -t -k packets.pcap')
+    h1.cmd('tcpreplay -i h1-eth0 -t -K packets.pcap')
     sleep(2)
     s1.cmd('ovs-ofctl dump-flows s1 > logs/flows_s1.log 2>&1 &')
     c0.cmd('killall -2 tcpdump')
