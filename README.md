@@ -1,5 +1,7 @@
 # TODO
 
+`sudo apt install tcpreplay`
+
 - [X] Implement topology: h1 <-> s1 <-> h2
 - [X] Experiment script:
   - [x] First draft

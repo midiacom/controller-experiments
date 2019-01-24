@@ -6,6 +6,7 @@ from mininet.node import RemoteController
 from mininet.link import TCLink
 from time import sleep
 
+
 class Simple_Topology(Topo):
     def __init__(self):
         Topo.__init__(self)
@@ -18,7 +19,7 @@ class Simple_Topology(Topo):
         # TODO Decide link parameters
         # Use htb?
         # internet = dict(bw=10, delay='2.5ms', loss=2, max_queue_size=100)
-        internet = dict(bw=100, delay='0.1ms', max_queue_size=1000)
+        internet = dict(bw=1000, delay='0.1ms')
         # local = dict(bw=100, delay='0.1ms', loss=1, max_queue_size=1000)
 
         # Links
@@ -53,9 +54,11 @@ def main():
     h2.cmd('tcpdump -i h2-eth0 -w logs/h2.pcap port not 53 &')
     mn.start()
     h2.cmd('ping -c 1 10.0.0.1')
-    h1.cmd('python send_packet.py 1000000 h1-eth0 00:00:00:00:00:02')
+    # h1.cmd('python send_packet.py 1000000 h1-eth0 00:00:00:00:00:02')
+    h1.cmd('tcpreplay -i h1-eth0 -t -k packets.pcap')
     sleep(2)
     s1.cmd('ovs-ofctl dump-flows s1 > logs/flows_s1.log 2>&1 &')
+    c0.cmd('killall -2 tcpdump')
     mn.stop()
 
 
