@@ -1,12 +1,11 @@
-#!/usr/bin/python
-
 from mininet.net import Mininet
-from mininet.cli import CLI
+# from mininet.cli import CLI
 from mininet.log import setLogLevel
 # from time import sleep
+from sys import argv as args
 
 
-def ovsns():
+def ovsns(user):
 
     "Create an empty network and add nodes to it."
 
@@ -29,7 +28,7 @@ def ovsns():
     #     '/home/juan/.local/bin/ryu-manager ryu.app.simple_switch '
     #     '> logs/ryu.log 2>&1 &')
     h1.cmd(
-        '/home/juan/.local/bin/ryu-manager ryu.app.simple_switch '
+        '/home/' + user + '/.local/bin/ryu-manager ryu.app.simple_switch '
         '> logs/ryu.log 2>&1 &')
 
     s1.cmd('bash sw_config_script.sh s1 100 > logs/s1.log')
@@ -51,7 +50,7 @@ def ovsns():
 
     s1.cmd('killall -2 tcpdump')
 
-    CLI(mn)
+    # CLI(mn)
 
     h1.cmd('rm -rf /tmp/mininet-s*')
     mn.stop()
@@ -59,4 +58,7 @@ def ovsns():
 
 if __name__ == '__main__':
     setLogLevel('info')
-    ovsns()
+    if len(args) == 2:
+        ovsns(args[1])
+    else:
+        print('Usage: sudo python inband_test.py $USER')
