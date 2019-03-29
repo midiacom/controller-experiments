@@ -1,18 +1,15 @@
 # TODO
 
-`sudo apt install tcpreplay`
+The experiments use the `packets.pcap` which is inside `packets.zip`.
 
-- [X] Implement topology: h1 <-> s1 <-> h2
-- [X] Experiment script:
-  - [x] First draft
-  - [X] Capture controller log
-  - [X] Capture mininet log
-  - [X] Implement scapy script to generate several packets with different sources
-- [ ] Test with different controllers, such as:
-  - [ ] ONOS
-  - [ ] OpenDaylight
-  - [ ] Ryu
-- [ ] Results script:
-  - [ ] Parse the .pcaps to .csv
-  - [ ] Measure the delay between the source, the switch, the controller and the destination
-  - [ ] Draw graphs
+First you need to extract the `packets.pcap` and place it inside your test-folder (either inband or outband folder).
+
+Then, you will need to install [tcpreplay](https://linux.die.net/man/1/tcpreplay). Tcpreplay replicates the traffic inside the `packets.pcap`.
+
+In Ubuntu you can use the advanced package tool:
+
+```bash
+sudo apt install tcpreplay
+```
+
+To run the experiment, simple type `. run.sh`. Don't forget the **dot**!!!
