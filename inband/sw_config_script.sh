@@ -42,15 +42,16 @@ ovs-vswitchd unix:/tmp/mininet-$1/db.sock \
 --detach \
 --monitor
 
-echo Configure OVS for $1
+echo Configuring OVS for $1
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-br $1
-ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-port $1 $1-eth0
-ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-port $1 $1-eth1
-# TODO: Adicionar porta do switch s2
+for ((i=0;i< $3;i++)) do
+   echo -e "\t"Adding port $1-eth$i
+   ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-port $1 $1-eth$i
+done
+
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-fail-mode $1 secure
-# Set the controller in the specified IP and Port
-ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-controller $1 tcp:10.0.0.1:6633
-# ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-controller $1 tcp:10.0.0.13:6633
+echo -e "\t"Setting controller at $4:6633
+ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-controller $1 tcp:$4:6633
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock show
 
 ifconfig $1 inet 10.0.0.$2/8
