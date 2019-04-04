@@ -48,7 +48,7 @@ class SimpleSwitch13(app_manager.RyuApp):
                                           ofproto.OFPCML_NO_BUFFER)]
         self.add_flow(datapath, 0, match, actions)
 
-    def add_flow(self, datapath, priority, match, actions, buffer_id=None):
+    def add_flow(self, datapath, priority, match, actions, buffer_id=None, timeout=0):
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
 
@@ -58,11 +58,12 @@ class SimpleSwitch13(app_manager.RyuApp):
             mod = parser.OFPFlowMod(datapath=datapath, buffer_id=buffer_id,
                                     priority=priority, match=match,
                                     instructions=inst,
-                                    hard_timeout=5)
+                                    hard_timeout=timeout)
         else:
             mod = parser.OFPFlowMod(datapath=datapath, priority=priority,
                                     match=match, instructions=inst,
-                                    hard_timeout=5)
+                                    hard_timeout=timeout)
+
         datapath.send_msg(mod)
 
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
@@ -108,10 +109,10 @@ class SimpleSwitch13(app_manager.RyuApp):
             # verify if we have a valid buffer_id, if yes avoid to send both
             # flow_mod & packet_out
             if msg.buffer_id != ofproto.OFP_NO_BUFFER:
-                self.add_flow(datapath, 1, match, actions, msg.buffer_id)
+                self.add_flow(datapath, 1, match, actions, msg.buffer_id, timeout=5)
                 return
             else:
-                self.add_flow(datapath, 1, match, actions)
+                self.add_flow(datapath, 1, match, actions, timeout=5)
         data = None
         if msg.buffer_id == ofproto.OFP_NO_BUFFER:
             data = msg.data
