@@ -26,22 +26,27 @@ def ovsns(user, ctrl_ip='10.0.0.13'):
     mn.start()
 
     c0.cmd(
-        '/home/' + user + '/.local/bin/ryu-manager ryu.app.simple_switch_13 '
+        '/home/' + user +
+        '/.local/bin/ryu-manager ../simple_switch_13_timeout.py '
         '> logs/ryu.log 2>&1 &')
 
-    sleep(2)
+    sleep(1)
 
-    s1.cmd('bash sw_config_script.sh s1 100 2 ' + str(ctrl_ip) + ' > logs/s1.log')
-    s2.cmd('bash sw_config_script.sh s2 101 3 ' + str(ctrl_ip) + ' > logs/s2.log')
+    s1.cmd(
+        'bash sw_config_script.sh s1 100 2 ' +
+        ctrl_ip + ' > logs/s1.log')
+    s2.cmd(
+        'bash sw_config_script.sh s2 101 3 ' +
+        ctrl_ip + ' > logs/s2.log')
 
-    sleep(2)
+    sleep(1)
 
     s1.cmd('tcpdump -i s1-eth1 -w logs/s1-eth1.pcap &')
     s2.cmd('tcpdump -i s2-eth0 -w logs/s2-eth0.pcap &')
     h1.cmd('tcpdump -i h1-eth0 -w logs/h1.pcap &')
     h2.cmd('tcpdump -i h2-eth0 -w logs/h2.pcap &')
 
-    sleep(2)
+    sleep(1)
 
     h2.cmdPrint('ping -c 1 10.0.0.1')
 
@@ -54,7 +59,7 @@ def ovsns(user, ctrl_ip='10.0.0.13'):
 
     # CLI(mn)
 
-    sleep(2)
+    sleep(1)
 
     s1.cmd('killall -2 tcpdump')
 
