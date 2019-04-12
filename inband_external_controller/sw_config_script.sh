@@ -57,8 +57,8 @@ if [ "$#" -gt 4 ]; then
 fi
 
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-fail-mode $1 secure
-echo -e "\t"Setting controller at $4:6633
-ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-controller $1 tcp:$4:6633
+echo -e "\t"Setting controller at $4:6653
+ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set-controller $1 tcp:$4:6653
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock show
 
 ifconfig $1 inet 192.168.1.$2/24
