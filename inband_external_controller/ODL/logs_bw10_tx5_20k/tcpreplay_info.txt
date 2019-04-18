@@ -1,0 +1,8 @@
+Actual: 20000 packets (840000 bytes) sent in 1.34 seconds
+Rated: 624998.1 Bps, 4.99 Mbps, 14880.90 pps
+Statistics for network device: h1-eth0
+	Successful packets:        20000
+	Failed packets:            0
+	Truncated packets:         0
+	Retried packets (ENOBUFS): 0
+	Retried packets (EAGAIN):  0

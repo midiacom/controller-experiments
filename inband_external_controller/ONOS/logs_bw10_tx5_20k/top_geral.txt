@@ -1,0 +1,58 @@
+top - 14:18:33 up  3:39,  1 user,  load average: 0,40, 0,45, 0,37
+KiB Mem : 16282300 total, 11363128 free,  2169964 used,  2749208 buff/cache
+top - 14:18:34 up  3:39,  1 user,  load average: 0,40, 0,45, 0,37
+KiB Mem : 16282300 total, 11363128 free,  2169964 used,  2749208 buff/cache
+top - 14:18:35 up  3:39,  1 user,  load average: 0,40, 0,45, 0,37
+KiB Mem : 16282300 total, 11363128 free,  2169964 used,  2749208 buff/cache
+top - 14:18:36 up  3:39,  1 user,  load average: 0,40, 0,45, 0,37
+KiB Mem : 16282300 total, 11368868 free,  2171296 used,  2742136 buff/cache
+top - 14:18:37 up  3:39,  1 user,  load average: 0,45, 0,45, 0,38
+KiB Mem : 16282300 total, 11368868 free,  2171296 used,  2742136 buff/cache
+top - 14:18:38 up  3:39,  1 user,  load average: 0,45, 0,45, 0,38
+KiB Mem : 16282300 total, 11368868 free,  2171296 used,  2742136 buff/cache
+top - 14:18:39 up  3:39,  1 user,  load average: 0,45, 0,45, 0,38
+KiB Mem : 16282300 total, 11370232 free,  2171084 used,  2740984 buff/cache
+top - 14:18:40 up  3:39,  1 user,  load average: 0,45, 0,45, 0,38
+KiB Mem : 16282300 total, 11370232 free,  2171084 used,  2740984 buff/cache
+top - 14:18:41 up  3:39,  1 user,  load average: 0,45, 0,45, 0,38
+KiB Mem : 16282300 total, 11370232 free,  2171084 used,  2740984 buff/cache
+top - 14:18:42 up  3:39,  1 user,  load average: 0,41, 0,45, 0,37
+KiB Mem : 16282300 total, 11369836 free,  2171144 used,  2741320 buff/cache
+top - 14:18:43 up  3:39,  1 user,  load average: 0,41, 0,45, 0,37
+KiB Mem : 16282300 total, 11369836 free,  2171144 used,  2741320 buff/cache
+top - 14:18:44 up  3:39,  1 user,  load average: 0,41, 0,45, 0,37
+KiB Mem : 16282300 total, 11369836 free,  2171144 used,  2741320 buff/cache
+top - 14:18:45 up  3:39,  1 user,  load average: 0,41, 0,45, 0,37
+KiB Mem : 16282300 total, 11370192 free,  2169940 used,  2742168 buff/cache
+top - 14:18:46 up  3:39,  1 user,  load average: 0,41, 0,45, 0,37
+KiB Mem : 16282300 total, 11370192 free,  2169940 used,  2742168 buff/cache
+top - 14:18:47 up  3:39,  1 user,  load average: 0,38, 0,44, 0,37
+KiB Mem : 16282300 total, 11370192 free,  2169940 used,  2742168 buff/cache
+top - 14:18:48 up  3:39,  1 user,  load average: 0,38, 0,44, 0,37
+KiB Mem : 16282300 total, 11369780 free,  2170164 used,  2742356 buff/cache
+top - 14:18:49 up  3:39,  1 user,  load average: 0,38, 0,44, 0,37
+KiB Mem : 16282300 total, 11369780 free,  2170164 used,  2742356 buff/cache
+top - 14:18:50 up  3:39,  1 user,  load average: 0,38, 0,44, 0,37
+KiB Mem : 16282300 total, 11369780 free,  2170164 used,  2742356 buff/cache
+top - 14:18:51 up  3:39,  1 user,  load average: 0,38, 0,44, 0,37
+KiB Mem : 16282300 total, 11369448 free,  2170036 used,  2742816 buff/cache
+top - 14:18:52 up  3:39,  1 user,  load average: 0,35, 0,43, 0,37
+KiB Mem : 16282300 total, 11369448 free,  2170036 used,  2742816 buff/cache
+top - 14:18:53 up  3:39,  1 user,  load average: 0,35, 0,43, 0,37
+KiB Mem : 16282300 total, 11369448 free,  2170036 used,  2742816 buff/cache
+top - 14:18:54 up  3:39,  1 user,  load average: 0,35, 0,43, 0,37
+KiB Mem : 16282300 total, 11369192 free,  2169944 used,  2743164 buff/cache
+top - 14:18:55 up  3:39,  1 user,  load average: 0,35, 0,43, 0,37
+KiB Mem : 16282300 total, 11369192 free,  2169944 used,  2743164 buff/cache
+top - 14:18:56 up  3:39,  1 user,  load average: 0,35, 0,43, 0,37
+KiB Mem : 16282300 total, 11369192 free,  2169944 used,  2743164 buff/cache
+top - 14:18:57 up  3:39,  1 user,  load average: 0,56, 0,47, 0,38
+KiB Mem : 16282300 total, 11288680 free,  2237828 used,  2755792 buff/cache
+top - 14:18:58 up  3:39,  1 user,  load average: 0,56, 0,47, 0,38
+KiB Mem : 16282300 total, 11288680 free,  2237828 used,  2755792 buff/cache
+top - 14:18:59 up  3:39,  1 user,  load average: 0,56, 0,47, 0,38
+KiB Mem : 16282300 total, 11288680 free,  2237828 used,  2755792 buff/cache
+top - 14:19:00 up  3:39,  1 user,  load average: 0,56, 0,47, 0,38
+KiB Mem : 16282300 total, 11290868 free,  2229128 used,  2762304 buff/cache
+top - 14:19:01 up  3:40,  1 user,  load average: 0,56, 0,47, 0,38
+KiB Mem : 16282300 total, 11290868 free,  2229128 used

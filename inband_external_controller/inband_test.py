@@ -13,8 +13,8 @@ def ovsns(user, ctrl_ip='192.168.1.13'):
     "Create an empty network and add nodes to it."
 
     bandw = 10
-    rate = 1
-    pckt_num = 20
+    rate = 5
+    pckt_num = 2
 
     mn = Mininet(topo=None, build=False, link=TCLink)
 
@@ -66,18 +66,21 @@ def ovsns(user, ctrl_ip='192.168.1.13'):
     h1.cmd("top -b -d 1 | grep 'load\|KiB Mem' >> "+str(logdir)+"/top_geral.txt &")
     h1.cmd("top -b -d 1 | grep 'mn\|ovs\|tcpdump' >> "+str(logdir)+"/top.txt &")
 
-    h2.cmd('ping -c 1 192.168.1.3')
+    sleep(10)
 
-    sleep(20)
+    h2.cmd('ping -c 5 192.168.1.3')
+    #h2.cmd('ping -c 1 192.168.1.3')
+
+    sleep(50)
 
     h1.cmd('tcpreplay -i h1-eth0 -K --mbps '+str(rate)+' packets_'+str(pckt_num)+'k.pcap > '+str(logdir)+'/tcpreplay_info.txt')
 
-    # s1.cmd('ovs-ofctl dump-flows s1 > logs/flows_s1.log 2>&1 &')
-    # s2.cmd('ovs-ofctl dump-flows s1 > logs/flows_s1.log 2>&1 &')
-
     #CLI(mn)
 
-    sleep(30)
+    sleep(60)
+
+    s1.cmd('ovs-ofctl dump-flows s1 > '+str(logdir)+'/flows_s1.log 2>&1 &')
+    s2.cmd('ovs-ofctl dump-flows s2 > '+str(logdir)+'/flows_s2.log 2>&1 &')
 
     h1.cmd('chmod 777 -R '+str(logdir)+'')
 
