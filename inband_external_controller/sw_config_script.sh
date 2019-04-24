@@ -46,6 +46,7 @@ ovs-vswitchd unix:/tmp/mininet-$1/db.sock \
 
 echo Configuring OVS for $1
 ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-br $1
+ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock set bridge $1 protocols=OpenFlow13
 for ((i=0;i< $3;i++)) do
    echo -e "\t"Adding port $1-eth$i
    ovs-vsctl --db=unix:/tmp/mininet-$1/db.sock add-port $1 $1-eth$i

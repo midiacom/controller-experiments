@@ -14,7 +14,7 @@ def ovsns(user, ctrl_ip='192.168.1.13'):
 
     bandw = 10
     rate = 5
-    pckt_num = 2
+    pckt_num = 5
 
     mn = Mininet(topo=None, build=False, link=TCLink)
 
@@ -40,7 +40,6 @@ def ovsns(user, ctrl_ip='192.168.1.13'):
 
     # c0.cmd('/home/' + user + '/.local/bin/ryu-manager ryu.app.simple_switch ''> logs/ryu.log 2>&1 &')
     
-    # s1.cmdPrint('bash sw_config_script.sh s1 100 2 '+ str(ctrl_ip) +' > logs/s1.log')
     s1.cmdPrint('bash sw_config_script.sh s1 103 2 ' + str(ctrl_ip))
     s2.cmdPrint('bash sw_config_script.sh s2 104 2 ' + str(ctrl_ip) + ' enp1s0')
 
@@ -62,25 +61,26 @@ def ovsns(user, ctrl_ip='192.168.1.13'):
     h1.cmd('tcpdump -i h1-eth0 -w '+str(logdir)+'/h1.pcap ether src 00:00:00:00:00:01 or ether dst 00:00:00:00:00:02 or ether dst 00:00:00:00:00:01 &')
     h2.cmd('tcpdump -i h2-eth0 -w '+str(logdir)+'/h2.pcap ether src 00:00:00:00:00:01 or ether dst 00:00:00:00:00:02 or ether dst 00:00:00:00:00:01 &')
 
-    h1.cmd('date > '+str(logdir)+'/inicio.txt ')
     h1.cmd("top -b -d 1 | grep 'load\|KiB Mem' >> "+str(logdir)+"/top_geral.txt &")
-    h1.cmd("top -b -d 1 | grep 'mn\|ovs\|tcpdump' >> "+str(logdir)+"/top.txt &")
+    h1.cmd("top -b -d 1 | grep 'sudo\|ovs\|tcpdump' >> "+str(logdir)+"/top.txt &")
 
+    print('10 second sleep...')
     sleep(10)
 
-    h2.cmd('ping -c 5 192.168.1.3')
-    #h2.cmd('ping -c 1 192.168.1.3')
+    h2.cmd('ping -c 1 192.168.1.3')
 
-    sleep(50)
+    print('20 second sleep...')
+    sleep(20)  # was 50
 
     h1.cmd('tcpreplay -i h1-eth0 -K --mbps '+str(rate)+' packets_'+str(pckt_num)+'k.pcap > '+str(logdir)+'/tcpreplay_info.txt')
 
-    #CLI(mn)
+    # CLI(mn)
 
-    sleep(60)
+    print('60 second sleep...')
+    sleep(60)  # was 60
 
-    s1.cmd('ovs-ofctl dump-flows s1 > '+str(logdir)+'/flows_s1.log 2>&1 &')
-    s2.cmd('ovs-ofctl dump-flows s2 > '+str(logdir)+'/flows_s2.log 2>&1 &')
+    s1.cmd('ovs-ofctl -O OpenFlow13 dump-flows s1 > '+str(logdir)+'/flows_s1.log 2>&1 &')
+    s2.cmd('ovs-ofctl -O OpenFlow13 dump-flows s2 > '+str(logdir)+'/flows_s2.log 2>&1 &')
 
     h1.cmd('chmod 777 -R '+str(logdir)+'')
 
