@@ -16,7 +16,7 @@ CONVERTER = {
 
 CONTROLLER = {
     'odl': 'arp',
-    'onos': 'goose'
+    'onos': 'ip'
 }
 
 
