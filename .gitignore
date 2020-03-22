@@ -1,6 +1,7 @@
-# tcpdump
+# logs
 *.pcap
 *.log
+*.txt
 
 # python
 *.pyc
