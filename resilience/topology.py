@@ -1,16 +1,22 @@
 from mininet.topo import Topo
 from mininet.net import Mininet
 from mininet.log import setLogLevel
-from mininet.node import RemoteController
+from mininet.node import RemoteController, OVSSwitch
 from mininet.link import TCLink
 from time import sleep
 from sys import argv
+from functools import partial
 
 CONVERTER = {
     1: {'pps': 1, 'length': '30k'},
     5: {'pps': 0.2, 'length': '6k'},
     100: {'pps': 1, 'length': '100'},
     10: {'pps': 0.1, 'length': '3k'}
+}
+
+CONTROLLER = {
+    'odl': 'arp',
+    'onos': 'goose'
 }
 
 
@@ -35,9 +41,10 @@ class Simple_Topology(Topo):
         self.addLink(switch_list[-1], h2, **internet)
 
 
-def main(remote_ip, switches, interval, pcap):
+def main(remote_ip, switches, interval, name):
     topo = Simple_Topology(switches)
-    mn = Mininet(topo=topo, controller=None, link=TCLink)
+    of13 = partial(OVSSwitch, protocols='OpenFlow13')
+    mn = Mininet(topo=topo, controller=None, link=TCLink, switch=of13)
     mn.addController(
         'c0', controller=RemoteController, ip=remote_ip, port=6633)
     h1, h2, c0 = mn.get('h1', 'h2', 'c0')
@@ -56,7 +63,11 @@ def main(remote_ip, switches, interval, pcap):
 
     c0.cmd('rm -rf logs')
     c0.cmd('mkdir -p logs')
-    c0.cmd('tcpdump -i lo -w logs/openflow.pcap port 6633 &')
+
+    c0.cmd("top -b -d 1 | grep 'load\|KiB Mem' >> ", 'logs/top_geral.txt &')
+    c0.cmd("top -b -d 1 | grep 'sudo\|ovs\|tcpdump' >>", 'logs/top.txt &')
+
+    c0.cmd('tcpdump -i enp1s0 -w logs/openflow.pcap port 6633 &')
     for sw in mn.switches:
         intf1 = str(sw.intfs[1])
         sw.cmd(
@@ -73,14 +84,17 @@ def main(remote_ip, switches, interval, pcap):
 
     pps = CONVERTER[interval]['pps']
     length = CONVERTER[interval]['length']
+    pcap = CONTROLLER[name]
     h1.cmd(
         'tcpreplay -i h1-eth0 -K -p', pps,
-        'packets/' + pcap + length + '.pcap')
+        'packets/' + pcap + length + '.pcap >',
+        'logs/tcpreplay_info.txt')
     sleep(2)
     for sw in mn.switches:
         sw.cmd(
-            'ovs-ofctl dump-flows', str(sw),
-            '> logs/flows_' + str(sw) + '.log 2>&1 &')
+            'ovs-ofctl -O OpenFlow13 dump-flows', str(sw),
+            '> logs/flows_' + str(sw) + '.log')
+    c0.cmd('chmod 777 -R logs')
     c0.cmd('killall -2 tcpdump')
     mn.stop()
 
@@ -92,8 +106,8 @@ if __name__ == '__main__':
     if len(argv) != 5:
         print(
             'Usage: sudo python topology.py <controller-ip> '
-            '<number-of-switches> <interval-in-seconds> <pcap-type>\n'
-            'e.g.: sudo python topology.py 192.168.1.17 1 1 arp')
+            '<number-of-switches> <interval-in-seconds> <controller-name>\n'
+            'e.g.: sudo python topology.py 127.0.0.1 1 100 odl')
         exit(-1)
     switches = int(argv[2])
     interval = int(argv[3])
@@ -103,5 +117,4 @@ if __name__ == '__main__':
     if interval not in CONVERTER:
         print('ERROR unknown interval')
         exit(-1)
-    # controller, switches, pps, pcap
-    main(argv[1], switches, interval, argv[4])
+    main(argv[1], switches, interval, argv[4].lower())
