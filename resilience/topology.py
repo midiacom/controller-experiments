@@ -41,7 +41,7 @@ class Simple_Topology(Topo):
         self.addLink(switch_list[-1], h2, **internet)
 
 
-def main(remote_ip, switches, interval, name):
+def main(user, remote_ip, switches, interval, name):
     topo = Simple_Topology(switches)
     of13 = partial(OVSSwitch, protocols='OpenFlow13')
     mn = Mininet(topo=topo, controller=None, link=TCLink, switch=of13)
@@ -94,7 +94,9 @@ def main(remote_ip, switches, interval, name):
         sw.cmd(
             'ovs-ofctl -O OpenFlow13 dump-flows', str(sw),
             '> logs/flows_' + str(sw) + '.log')
-    c0.cmd('chmod 777 -R logs')
+
+    # read and write permission
+    c0.cmd('chown -R ' + user + '.' + user + ' logs')
     c0.cmd('killall -2 tcpdump')
     mn.stop()
 
@@ -103,18 +105,18 @@ topos = {'simple_topo': (lambda: Simple_Topology())}
 
 if __name__ == '__main__':
     setLogLevel('debug')
-    if len(argv) != 5:
+    if len(argv) != 6:
         print(
-            'Usage: sudo python topology.py <controller-ip> '
+            'Usage: sudo python topology.py <user> <controller-ip> '
             '<number-of-switches> <interval-in-seconds> <controller-name>\n'
-            'e.g.: sudo python topology.py 127.0.0.1 1 100 odl')
+            'e.g.: sudo python topology.py $USER 127.0.0.1 1 100 odl')
         exit(-1)
-    switches = int(argv[2])
-    interval = int(argv[3])
+    switches = int(argv[3])
+    interval = int(argv[4])
     if switches < 1:
         print('ERROR the topology needs at least 1 switch')
         exit(-1)
     if interval not in CONVERTER:
         print('ERROR unknown interval')
         exit(-1)
-    main(argv[1], switches, interval, argv[4].lower())
+    main(argv[1], argv[2], switches, interval, argv[5].lower())
